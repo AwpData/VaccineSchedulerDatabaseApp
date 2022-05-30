@@ -17,7 +17,7 @@ CREATE TABLE Appointments (
     date Date,
     p_username varchar(255) REFERENCES Patients,
     c_username varchar(255) REFERENCES Caregivers,
-    vaccine_name varchar(255) REFERENCES Vaccines
+    vaccine_name varchar(255) REFERENCES Vaccines,
     PRIMARY KEY (a_id)
 );
 
