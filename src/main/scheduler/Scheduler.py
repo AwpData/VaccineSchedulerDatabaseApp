@@ -67,7 +67,7 @@ def create_patient(tokens):  # Similar to create_caregiver code, except no exter
         print("Failed to create user; try again")
         print("Error:", e)
         return
-    print("Created user ", username)
+    print("Created user", username)
 
 
 def create_caregiver(tokens):
@@ -104,7 +104,7 @@ def create_caregiver(tokens):
         print("Failed to create user; try again")
         print("Error:", e)
         return
-    print("Created user ", username)
+    print("Created user", username)
 
 
 def username_exists_caregiver(username):
@@ -601,8 +601,8 @@ def start():
     global current_caregiver
     global current_patient
     stop = False
-    print_menu()  # I put the menu into a function because I made a 'help' command to display the menu
     while not stop:
+        print_menu() # I put the menu into a function because I made a 'help' command to display the menu
         print("> ", end='')
         try:
             response = str(input())
@@ -617,15 +617,15 @@ def start():
             continue
         operation = tokens[0]
         if operation == "create_patient":  # I modified the create_patient so that you have to logout to create one
-            if current_patient is not None or current_caregiver is not None:
-                print("Please logout before creating a patient")
-            else:
-                create_patient(tokens)
+            # if current_patient is not None or current_caregiver is not None:
+            #     print("Please logout before creating a patient")
+            # else:
+            create_patient(tokens)
         elif operation == "create_caregiver":  # I modified the create_caregiver so that you have to logout to create one
-            if current_patient is not None or current_caregiver is not None:
-                print("Please logout before creating a caregiver")
-            else:
-                create_caregiver(tokens)
+            # if current_patient is not None or current_caregiver is not None:
+            #     print("Please logout before creating a caregiver")
+            # else:
+            create_caregiver(tokens)
         elif operation == "login_patient":
             login_patient(tokens)
         elif operation == "login_caregiver":
@@ -642,14 +642,14 @@ def start():
             add_doses(tokens)
         elif operation == "get_vaccine_information":
             get_vaccine_doses()
-        elif operation == "show_appointments":
-            show_appointments(tokens)
+        # elif operation == "show_appointments":
+        #     show_appointments(tokens)
         elif operation == "logout":
             logout(tokens)
-        elif operation == "help":
-            print_menu()
+        # elif operation == "help":
+        #     print_menu()
         elif operation == "quit":
-            print("Program terminated...")
+            print("Bye!")
             stop = True
         else:
             print("Invalid operation name!")
@@ -668,9 +668,9 @@ def print_menu():  # New external method to print the menu (avoiding repetition 
     print("> cancel <appointment_id>")
     print("> add_doses <vaccine> <number>")
     print("> get_vaccine_information")
-    print("> show_appointments")
+    # print("> show_appointments")
     print("> logout")
-    print("> help (see this menu again)")
+    # print("> help (see this menu again)")
     print("> quit")
     print()
 
