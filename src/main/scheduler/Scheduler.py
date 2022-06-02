@@ -609,7 +609,6 @@ def start():
         except ValueError:
             print("Please try again!")
             break
-        print("\n")
         tokens = response.split(" ")
         tokens[0] = tokens[0].lower()
         if len(tokens) == 0:
@@ -667,11 +666,11 @@ def print_menu():  # New external method to print the menu (avoiding repetition 
     print("> upload_availability <date>")
     print("> cancel <appointment_id>")
     print("> add_doses <vaccine> <number>")
-    print("> get_vaccine_information")
-    # print("> show_appointments")
+    # print("> get_vaccine_information")
+    print("> show_appointments")
     print("> logout")
     # print("> help (see this menu again)")
-    print("> quit")
+    print("> Quit")
     print()
 
 
