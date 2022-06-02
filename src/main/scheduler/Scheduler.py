@@ -136,9 +136,9 @@ def check_password(password):  # Extra credit option using regex to check variou
     if len(password) < 8:
         print("Password must be at least 8 characters")
         valid_password = False
-    if re.search("[A-Z]+", password) is None:
-        print("Password must have at least 1 capital letter")
-        valid_password = False
+    #if re.search("[A-Z]+", password) is None:
+        #print("Password must have at least 1 capital letter")
+        #valid_password = False
     if re.search(r"[\d]+", password) is None:
         print("Password must have at least 1 number")
         valid_password = False
@@ -609,6 +609,7 @@ def start():
         except ValueError:
             print("Please try again!")
             break
+        response = response.lower()
         tokens = response.split(" ")
         tokens[0] = tokens[0].lower()
         if len(tokens) == 0:
