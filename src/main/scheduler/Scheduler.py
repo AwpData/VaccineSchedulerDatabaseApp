@@ -174,6 +174,7 @@ def login_patient(tokens):  # Similar to login_caregiver code
     else:
         print("Logged in as: " + username)
         current_patient = patient
+        patient_menu()
 
 
 def login_caregiver(tokens):
@@ -210,6 +211,7 @@ def login_caregiver(tokens):
     else:
         print("Logged in as: " + username)
         current_caregiver = caregiver
+        caregiver_menu()
 
 
 def search_caregiver_schedule(tokens):
@@ -603,6 +605,7 @@ def logout(tokens):
             current_patient = None
             current_caregiver = None
             print("Successfully logged out!")
+            base_menu()
         else:
             print("Please login first!")
     except Exception as e:
@@ -634,8 +637,9 @@ def start():
     global current_caregiver
     global current_patient
     stop = False
-    print_menu()  # I put the menu into a function because I made a 'help' command to display the menu
+    base_menu()  # I put the menu into a function because I made a 'help' command to display the menu
     while not stop:
+        print("")
         print("> ", end='')
         try:
             response = str(input())
@@ -649,40 +653,39 @@ def start():
             ValueError("Please try again!")
             continue
         operation = tokens[0]
-        if operation == "create_patient":  # I modified the create_patient so that you have to logout to create one
-            if current_patient is not None or current_caregiver is not None:
-                print("Please logout before creating a patient")
-            else:
-                create_patient(tokens)
-        elif operation == "create_caregiver":  # I modified the create_caregiver so that you have to logout to create one
-            if current_patient is not None or current_caregiver is not None:
-                print("Please logout before creating a caregiver")
-            else:
-                create_caregiver(tokens)
-        elif operation == "login_patient":
+        if operation == "create_patient" and (current_caregiver == current_patient):
+            create_patient(tokens)
+        elif operation == "create_caregiver" and (current_caregiver == current_patient):
+            create_caregiver(tokens)
+        elif operation == "login_patient" and (current_caregiver == current_patient):
             login_patient(tokens)
-        elif operation == "login_caregiver":
+        elif operation == "login_caregiver" and (current_caregiver == current_patient):
             login_caregiver(tokens)
         elif operation == "search_caregiver_schedule":
             search_caregiver_schedule(tokens)
-        elif operation == "reserve":
+        elif operation == "reserve" and current_patient is not None:
             reserve(tokens)
-        elif operation == "upload_availability":
+        elif operation == "upload_availability" and current_caregiver is not None:
             upload_availability(tokens)
-        elif operation == "cancel":
+        elif operation == "cancel" and (current_caregiver is not None or current_patient is not None):
             cancel(tokens)
         elif operation == "show_all_available_dates":
             show_all_available_dates(tokens)
-        elif operation == "add_doses":
+        elif operation == "add_doses" and current_caregiver is not None:
             add_doses(tokens)
         elif operation == "get_vaccine_information":
             get_vaccine_doses()
-        elif operation == "show_appointments":
+        elif operation == "show_appointments" and (current_caregiver is not None or current_patient is not None):
             show_appointments(tokens)
-        elif operation == "logout":
+        elif operation == "logout" and (current_caregiver is not None or current_patient is not None):
             logout(tokens)
         elif operation == "help":
-            print_menu()
+            if current_caregiver is not None:
+                caregiver_menu()
+            if current_patient is not None:
+                patient_menu()
+            else:
+                base_menu()
         elif operation == "quit":
             print("Bye!")
             stop = True
@@ -690,15 +693,10 @@ def start():
             print("Invalid operation name!")
 
 
-def print_menu():  # New external method to print the menu (avoiding repetition since I have a 'help' command now)
+def caregiver_menu():
     print("")
     print(" *** Please enter one of the following commands *** ")
-    print("> create_patient <username> <password>")
-    print("> create_caregiver <username> <password>")
-    print("> login_patient <username> <password>")
-    print("> login_caregiver <username> <password>")
     print("> search_caregiver_schedule <date>")
-    print("> reserve <date> <vaccine>")
     print("> upload_availability <date>")
     print("> cancel <appointment_id>")
     print("> show_all_available_dates")
@@ -708,7 +706,34 @@ def print_menu():  # New external method to print the menu (avoiding repetition 
     print("> logout")
     print("> help (see this menu again)")
     print("> Quit")
+
+
+def patient_menu():
     print("")
+    print(" *** Please enter one of the following commands *** ")
+    print("> search_caregiver_schedule <date>")
+    print("> reserve <date> <vaccine>")
+    print("> cancel <appointment_id>")
+    print("> show_all_available_dates")
+    print("> get_vaccine_information")
+    print("> show_appointments")
+    print("> logout")
+    print("> help (see this menu again)")
+    print("> Quit")
+
+
+def base_menu():
+    print("")
+    print(" *** Please enter one of the following commands *** ")
+    print("> create_patient <username> <password>")
+    print("> create_caregiver <username> <password>")
+    print("> login_patient <username> <password>")
+    print("> login_caregiver <username> <password>")
+    print("> search_caregiver_schedule <date>")
+    print("> show_all_available_dates")
+    print("> get_vaccine_information")
+    print("> help (see this menu again)")
+    print("> Quit")
 
 
 if __name__ == "__main__":
