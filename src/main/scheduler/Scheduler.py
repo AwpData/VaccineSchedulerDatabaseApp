@@ -142,6 +142,9 @@ def check_password(password):  # Extra credit option using regex to check variou
     # if re.search("[A-Z]+", password) is None:
     # print("Password must have at least 1 capital letter")
     # valid_password = False
+    #if re.search("[A-Z]+", password) is None:
+        #print("Password must have at least 1 capital letter")
+        #valid_password = False
     if re.search(r"[\d]+", password) is None:
         print("Password must have at least 1 number")
         valid_password = False
@@ -647,6 +650,8 @@ def start():
             # get_vaccine_doses()
         elif operation == "show_appointments":
             show_appointments(tokens)
+        elif operation == "show_appointments":
+             show_appointments(tokens)
         elif operation == "logout":
             logout(tokens)
         # elif operation == "help":
