@@ -412,7 +412,7 @@ def cancel(tokens):  # Extra credit cancel option implementation
         cancel_id = tokens[1]
 
         # Check 1: check that the user's desired appointment id is actually in their own appointments
-        get_appointment = "SELECT a_id, p_username, c_username, vaccine_name FROM Appointments WHERE a_id = %d"
+        get_appointment = "SELECT a_id, date, p_username, c_username, vaccine_name FROM Appointments WHERE a_id = %d"
         cursor.execute(get_appointment, cancel_id)
         appointment = cursor.fetchone()
         valid_appointment = False
@@ -435,6 +435,11 @@ def cancel(tokens):  # Extra credit cancel option implementation
             cursor.execute(delete_appointment, cancel_id)
             conn.commit()
             print("Appointment successfully cancelled.")
+            if current_patient is not None:  # If a patient canceled that appointment, add the availability back to caregiver
+                appointment_date = appointment['date']
+                caregiver = appointment['c_username']
+                cursor.execute("INSERT INTO Availabilities VALUES (%d, %d)", (appointment_date, caregiver))
+                conn.commit()
         else:
             print("Could not find appointment with id:", cancel_id)
     except pymssql.Error as e:
@@ -442,6 +447,36 @@ def cancel(tokens):  # Extra credit cancel option implementation
         print("DBError:", e)
     except Exception as e:
         print("Could not find appointment with id:", cancel_id)
+    finally:
+        cm.close_connection()
+
+
+def show_all_available_dates(tokens):
+    if len(tokens) != 1:
+        print("Failed to show available dates")
+        return
+    cm = ConnectionManager()
+    conn = cm.create_connection()
+    cursor = conn.cursor(as_dict=True)
+    try:
+        cursor.execute("SELECT Time, Username FROM Availabilities")
+        availabilities = cursor.fetchall()
+        if len(availabilities) == 0:
+            print("There are no dates available for vaccine appointments!")
+            return
+        print("-" * (len(availabilities) * 20))
+        print("{: >10}\t{: >10}".format("Date", "Caregiver"))
+        print("-" * (len(availabilities) * 20))
+        for i in range(0, len(availabilities)):
+            print("{: >10}\t{: >10}"
+                  .format(str(availabilities[i]["Time"]), availabilities[i]["Username"]))
+
+    except pymssql.Error as e:
+        print("Error in retrieving appointments")
+        print("DBError:", e)
+    except Exception as e:
+        print("Error in showing appointments")
+        print("Error:", e)
     finally:
         cm.close_connection()
 
@@ -636,6 +671,8 @@ def start():
             upload_availability(tokens)
         elif operation == "cancel":
             cancel(tokens)
+        elif operation == "show_all_available_dates":
+            show_all_available_dates(tokens)
         elif operation == "add_doses":
             add_doses(tokens)
         elif operation == "get_vaccine_information":
@@ -664,6 +701,7 @@ def print_menu():  # New external method to print the menu (avoiding repetition 
     print("> reserve <date> <vaccine>")
     print("> upload_availability <date>")
     print("> cancel <appointment_id>")
+    print("> show_all_available_dates")
     print("> add_doses <vaccine> <number>")
     print("> get_vaccine_information")
     print("> show_appointments")
