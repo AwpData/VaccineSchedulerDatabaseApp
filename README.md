@@ -15,6 +15,7 @@ Welcome to the COVID-19 Vaccine Reservation Scheduling Application!
 > reserve &ltdate> &ltvaccine>
 > upload_availability &ltdate>
 > cancel &ltappointment_id>
+> show_all_available_dates
 > add_doses &ltvaccine> &ltnumber>
 > get_vaccine_information
 > show_appointments
@@ -34,6 +35,8 @@ Welcome to the COVID-19 Vaccine Reservation Scheduling Application!
  <li><b>upload_availability</b> allows caregivers to upload a date when they are available for patients to make an appointment with them.
  
  <li><b>cancel</b> allows both patients and caregivers to cancel a valid date they have an appointment on.
+  
+ <li><b>show_all_available_dates</b> shows all available dates for every caregiver. 
  
  <li><b>add_doses</b> allows caregivers to add doses to existing vaccines or to create a new vaccine (real or fiction).
  
