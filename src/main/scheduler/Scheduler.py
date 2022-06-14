@@ -136,9 +136,9 @@ def check_password(password):  # Extra credit option using regex to check variou
     if len(password) < 8:
         print("Password must be at least 8 characters")
         valid_password = False
-    if re.search("[A-Z]+", password) is None:
-        print("Password must have at least 1 capital letter")
-        valid_password = False
+    # if re.search("[A-Z]+", password) is None:
+        # print("Password must have at least 1 capital letter")
+        # valid_password = False
     if re.search(r"[\d]+", password) is None:
         print("Password must have at least 1 number")
         valid_password = False
@@ -602,13 +602,14 @@ def start():
     global current_patient
     stop = False
     while not stop:
-        print_menu() # I put the menu into a function because I made a 'help' command to display the menu
+        print_menu()  # I put the menu into a function because I made a 'help' command to display the menu
         print("> ", end='')
         try:
             response = str(input())
         except ValueError:
             print("Please try again!")
             break
+        response = response.lower()
         tokens = response.split(" ")
         tokens[0] = tokens[0].lower()
         if len(tokens) == 0:
@@ -639,10 +640,10 @@ def start():
             cancel(tokens)
         elif operation == "add_doses":
             add_doses(tokens)
-        elif operation == "get_vaccine_information":
-            get_vaccine_doses()
-        # elif operation == "show_appointments":
-        #     show_appointments(tokens)
+        # elif operation == "get_vaccine_information":
+            # get_vaccine_doses()
+        elif operation == "show_appointments":
+            show_appointments(tokens)
         elif operation == "logout":
             logout(tokens)
         # elif operation == "help":
