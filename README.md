@@ -49,7 +49,7 @@ Welcome to the COVID-19 Vaccine Reservation Scheduling Application!
  
  <h2>Requirements / Installation</h2>
  <li>Clone the repo into an IDE
- <li>Create a database server (I used Microsoft Azure as it works well with pymssql)
+ <li>Create a database server (I used Microsoft Azure as it works well with pymssql, but something lightweight such as SQLite should be fine)
  <li>Create an environment in <a href="https://www.anaconda.com/">Anaconda</a> while configuring the environment variables to connect to the database server
  <li>Run <code>scheduler.py</code> in Anaconda
 
