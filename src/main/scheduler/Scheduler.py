@@ -1,8 +1,6 @@
 import datetime
-import re
-
 import pymssql
-
+import re
 from db.ConnectionManager import ConnectionManager
 from model.Caregiver import Caregiver
 from model.Patient import Patient
@@ -136,15 +134,9 @@ def check_password(password):  # Extra credit option using regex to check variou
     if len(password) < 8:
         print("Password must be at least 8 characters")
         valid_password = False
-    # if re.search("[A-Z]+", password) is None:
-        # print("Password must have at least 1 capital letter")
-        # valid_password = False
-    # if re.search("[A-Z]+", password) is None:
-    # print("Password must have at least 1 capital letter")
-    # valid_password = False
-    #if re.search("[A-Z]+", password) is None:
-        #print("Password must have at least 1 capital letter")
-        #valid_password = False
+    if re.search("[A-Z]+", password) is None:
+        print("Password must have at least 1 capital letter")
+        valid_password = False
     if re.search(r"[\d]+", password) is None:
         print("Password must have at least 1 number")
         valid_password = False
@@ -607,8 +599,8 @@ def start():
     global current_caregiver
     global current_patient
     stop = False
+    print_menu()  # I put the menu into a function because I made a 'help' command to display the menu
     while not stop:
-        print_menu()  # I put the menu into a function because I made a 'help' command to display the menu
         print("> ", end='')
         try:
             response = str(input())
@@ -623,15 +615,15 @@ def start():
             continue
         operation = tokens[0]
         if operation == "create_patient":  # I modified the create_patient so that you have to logout to create one
-            # if current_patient is not None or current_caregiver is not None:
-            #     print("Please logout before creating a patient")
-            # else:
-            create_patient(tokens)
+            if current_patient is not None or current_caregiver is not None:
+                print("Please logout before creating a patient")
+            else:
+                create_patient(tokens)
         elif operation == "create_caregiver":  # I modified the create_caregiver so that you have to logout to create one
-            # if current_patient is not None or current_caregiver is not None:
-            #     print("Please logout before creating a caregiver")
-            # else:
-            create_caregiver(tokens)
+            if current_patient is not None or current_caregiver is not None:
+                print("Please logout before creating a caregiver")
+            else:
+                create_caregiver(tokens)
         elif operation == "login_patient":
             login_patient(tokens)
         elif operation == "login_caregiver":
@@ -646,16 +638,14 @@ def start():
             cancel(tokens)
         elif operation == "add_doses":
             add_doses(tokens)
-        # elif operation == "get_vaccine_information":
-            # get_vaccine_doses()
+        elif operation == "get_vaccine_information":
+            get_vaccine_doses()
         elif operation == "show_appointments":
             show_appointments(tokens)
-        elif operation == "show_appointments":
-             show_appointments(tokens)
         elif operation == "logout":
             logout(tokens)
-        # elif operation == "help":
-        #     print_menu()
+        elif operation == "help":
+            print_menu()
         elif operation == "quit":
             print("Bye!")
             stop = True
@@ -675,10 +665,10 @@ def print_menu():  # New external method to print the menu (avoiding repetition 
     print("> upload_availability <date>")
     print("> cancel <appointment_id>")
     print("> add_doses <vaccine> <number>")
-    # print("> get_vaccine_information")
+    print("> get_vaccine_information")
     print("> show_appointments")
     print("> logout")
-    # print("> help (see this menu again)")
+    print("> help (see this menu again)")
     print("> Quit")
     print()
 
