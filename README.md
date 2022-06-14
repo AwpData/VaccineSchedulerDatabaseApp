@@ -3,7 +3,7 @@
 A simulation of registering for a COVID-19 vaccine appointment. It already includes the 3 main vaccines (J&J, Pfizer, Moderna), but caregivers can create new ones. This project was created mainly to enchance my learning of database applications including using SQL in python with <a href="https://pythonhosted.org/pymssql/index.html">pymssql</a>, ER diagrams, data normalization, and SQL queries / updates.
 
 <h2> Guide </h2>
-<li> Once the user runs the program, they will be greeted with this menu. I will run through what each option does.
+<li> Once the user runs the program, these are all the possible options that can be done (assuming they are allowed to). I will run through what each option does.
 <pre>
 Welcome to the COVID-19 Vaccine Reservation Scheduling Application!
  *** Please enter one of the following commands ***
