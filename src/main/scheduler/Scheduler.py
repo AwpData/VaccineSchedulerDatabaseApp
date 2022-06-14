@@ -705,7 +705,7 @@ def caregiver_menu():
     print("> show_appointments")
     print("> logout")
     print("> help (see this menu again)")
-    print("> Quit")
+    print("> quit")
 
 
 def patient_menu():
@@ -719,7 +719,7 @@ def patient_menu():
     print("> show_appointments")
     print("> logout")
     print("> help (see this menu again)")
-    print("> Quit")
+    print("> quit")
 
 
 def base_menu():
@@ -733,7 +733,7 @@ def base_menu():
     print("> show_all_available_dates")
     print("> get_vaccine_information")
     print("> help (see this menu again)")
-    print("> Quit")
+    print("> quit")
 
 
 if __name__ == "__main__":
