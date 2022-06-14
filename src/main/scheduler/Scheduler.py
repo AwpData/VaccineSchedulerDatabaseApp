@@ -607,9 +607,9 @@ def start():
         except ValueError:
             print("Please try again!")
             break
-        response = response.lower()
         tokens = response.split(" ")
         tokens[0] = tokens[0].lower()
+        print("")
         if len(tokens) == 0:
             ValueError("Please try again!")
             continue
@@ -654,7 +654,7 @@ def start():
 
 
 def print_menu():  # New external method to print the menu (avoiding repetition since I have a 'help' command now)
-    print()
+    print("")
     print(" *** Please enter one of the following commands *** ")
     print("> create_patient <username> <password>")
     print("> create_caregiver <username> <password>")
@@ -670,7 +670,7 @@ def print_menu():  # New external method to print the menu (avoiding repetition 
     print("> logout")
     print("> help (see this menu again)")
     print("> Quit")
-    print()
+    print("")
 
 
 if __name__ == "__main__":
